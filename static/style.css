@@ -101,6 +101,10 @@ body {
     text-align: center;
 }
 
+.row-title::after:hover {
+    content: "this is new"
+}
+
 footer {
     position: absolute;
     bottom: 0;

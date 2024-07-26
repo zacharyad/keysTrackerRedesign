@@ -134,7 +134,13 @@ document.addEventListener('DOMContentLoaded', () => {
         undecidedElem.innerText = tallyData[i];
       }
     }
-
+    if (tallyData[2] < 8) {
+      const outcomeElem = document.querySelector('.outcome');
+      outcomeElem.style.opacity = 0;
+      outcomeElem.innerText = '';
+      outcomeElem.style.color = '#ffffff';
+      outcomeElem.style.backgroundColor = '#ffffff';
+    }
     if (tallyData[0] >= 8 && tallyData[1] < 6) {
       const trueCandidate = selectionDataArr[2];
       const outcomeElem = document.querySelector('.outcome');
