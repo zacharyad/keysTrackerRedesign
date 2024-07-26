@@ -68,6 +68,12 @@ body {
 
 } */
 
+.outcome {
+    opacity: 0;
+    text-align: center;
+    padding: 5px auto;
+    font-size: x-large;
+}
 
 
 .marker-box {

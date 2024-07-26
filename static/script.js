@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const trueCandidateName = 'Harris';
+  const falseCandidateName = 'Trump';
   let boxes = document.querySelectorAll('.marker-box');
   let trueElem = document.getElementById('true');
   let falseElem = document.getElementById('false');
+  let undecidedElem = document.getElementById('undecided');
   let tallyData = [0, 0, 13];
   const debounceTime = 25;
   let isPainting = false;
@@ -127,6 +130,26 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i < tallyData.length; i++) {
       if (i === 0) trueElem.innerText = tallyData[i];
       if (i === 1) falseElem.innerText = tallyData[i];
+      if (i === 2) {
+        undecidedElem.innerText = tallyData[i];
+      }
+    }
+
+    if (tallyData[0] >= 8 && tallyData[1] < 6) {
+      const trueCandidate = selectionDataArr[2];
+      const outcomeElem = document.querySelector('.outcome');
+      outcomeElem.style.opacity = 1;
+      outcomeElem.innerText = trueCandidateName + ' Wins';
+      outcomeElem.style.color = trueCandidate.textColor;
+      outcomeElem.style.backgroundColor = trueCandidate.color;
+    }
+    if (tallyData[1] >= 6 && tallyData[0] < 8) {
+      const falseCandidate = selectionDataArr[4];
+      const outcomeElem = document.querySelector('.outcome');
+      outcomeElem.style.opacity = 1;
+      outcomeElem.innerText = falseCandidateName + ' Wins';
+      outcomeElem.style.color = falseCandidate.textColor;
+      outcomeElem.style.backgroundColor = falseCandidate.color;
     }
   }
 
