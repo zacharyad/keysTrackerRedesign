@@ -52,7 +52,7 @@ html {
 }
 
 .container {
-    max-width: 1200px;
+
     width: 100%;
     margin: 0 auto;
     padding: 20px;
@@ -275,6 +275,10 @@ hr {
     content: "this is new"
 }
 
+.tally {
+margin: 0 auto;
+}
+
 footer {
     position: fixed;
     padding: 10px;
@@ -288,7 +292,16 @@ footer {
 
 
 @media screen and (max-width: 768px) {
-
+    .candidate-inputs {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .tally {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 
