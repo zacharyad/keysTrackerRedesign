@@ -1,15 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const trueCandidateName = 'Harris';
-  const falseCandidateName = 'Trump';
-  let boxes = document.querySelectorAll('.marker-box');
-  let trueElem = document.getElementById('true');
-  let falseElem = document.getElementById('false');
-  let undecidedElem = document.getElementById('undecided');
+  const trueCandidateNameInput = document.getElementById('trueCandidate');
+  const falseCandidateNameInput = document.getElementById('falseCandidate');
+  const candidateInputsCollection =
+    document.querySelectorAll('.candidateInput');
+  const boxes = document.querySelectorAll('.marker-box');
+  const trueElem = document.getElementById('true');
+  const falseElem = document.getElementById('false');
+  const undecidedElem = document.getElementById('undecided');
+  const clearSelectionsBtn = document.getElementById('clear-selections-btn');
   let tallyData = [0, 0, 13];
   const debounceTime = 25;
   let isPainting = false;
 
-  let selectionDataArr = [
+  const selectionDataArr = [
     {
       textColor: '#007AFF',
       color: '#ffffff',
@@ -23,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
       idx: 1,
       for: 0,
       name: 'Certainly True',
+      candidateName: getCandidate(true),
     },
     {
       textColor: '#02121C',
@@ -44,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
       idx: 4,
       for: 1,
       name: 'Certainly False',
+      candidateName: getCandidate(false),
     },
     {
       textColor: '#000000',
@@ -69,8 +74,21 @@ document.addEventListener('DOMContentLoaded', () => {
       );
 
       adjustTallyData(newDataObj);
-
       debouncePaint(elem, newDataObj);
+
+      if (clearSelectionsBtn.disabled === true) {
+        clearSelectionsBtn.disabled = false;
+      }
+    });
+  });
+
+  candidateInputsCollection.forEach((elem) => {
+    elem.addEventListener('keyup', (e) => {
+      if (e.target.value === '') {
+        document.querySelector('.outcome').innerText = e.target.id + ' Wins';
+      } else {
+        document.querySelector('.outcome').innerText = e.target.value + ' Wins';
+      }
     });
   });
 
@@ -135,27 +153,16 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
     if (tallyData[2] < 8) {
-      const outcomeElem = document.querySelector('.outcome');
-      outcomeElem.style.opacity = 0;
-      outcomeElem.innerText = '';
-      outcomeElem.style.color = '#ffffff';
-      outcomeElem.style.backgroundColor = '#ffffff';
+      const trueCandidate = selectionDataArr[1];
+      declareWinner();
     }
     if (tallyData[0] >= 8 && tallyData[1] < 6) {
-      const trueCandidate = selectionDataArr[2];
-      const outcomeElem = document.querySelector('.outcome');
-      outcomeElem.style.opacity = 1;
-      outcomeElem.innerText = trueCandidateName + ' Wins';
-      outcomeElem.style.color = trueCandidate.textColor;
-      outcomeElem.style.backgroundColor = trueCandidate.color;
+      const trueCandidate = selectionDataArr[1];
+      declareWinner(trueCandidate, getCandidate(true));
     }
     if (tallyData[1] >= 6 && tallyData[0] < 8) {
       const falseCandidate = selectionDataArr[4];
-      const outcomeElem = document.querySelector('.outcome');
-      outcomeElem.style.opacity = 1;
-      outcomeElem.innerText = falseCandidateName + ' Wins';
-      outcomeElem.style.color = falseCandidate.textColor;
-      outcomeElem.style.backgroundColor = falseCandidate.color;
+      declareWinner(falseCandidate, getCandidate(false));
     }
   }
 
@@ -163,5 +170,40 @@ document.addEventListener('DOMContentLoaded', () => {
     let newShadeVal = Number(currentValue) + 1;
     if (newShadeVal >= selectionDataArr.length) newShadeVal = 0;
     return selectionDataArr[newShadeVal];
+  }
+
+  clearSelectionsBtn.addEventListener('click', () => {
+    clearSelectionsBtn.disabled = true;
+
+    boxes.forEach((elem) => {
+      tallyData = [0, 0, 13];
+      let resetDataObj = selectionDataArr[0];
+      paintTally(elem, resetDataObj);
+    });
+
+    declareWinner();
+  });
+
+  function declareWinner(winnerElectionObj = false, candidateName) {
+    const outcomeElem = document.querySelector('.outcome');
+    if (winnerElectionObj === false) {
+      outcomeElem.style.opacity = 0;
+      outcomeElem.innerText = '';
+      outcomeElem.style.color = '#ffffff';
+      outcomeElem.style.backgroundColor = '#ffffff';
+      return;
+    }
+    outcomeElem.style.opacity = 1;
+    outcomeElem.innerText = candidateName + ' Wins';
+    outcomeElem.style.color = winnerElectionObj.textColor;
+    outcomeElem.style.backgroundColor = winnerElectionObj.color;
+  }
+
+  function getCandidate(candidate) {
+    if (candidate) {
+      return trueCandidateNameInput.value;
+    } else {
+      return falseCandidateNameInput.value;
+    }
   }
 });
