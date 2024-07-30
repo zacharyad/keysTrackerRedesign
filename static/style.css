@@ -49,6 +49,7 @@ html {
     flex-direction: column;
     align-content: center;
     width: 100dvw;
+    padding: 20px;
 }
 
 .container {
@@ -65,6 +66,16 @@ html {
 .container:first-child > div {
     display: flex;
     justify-content: end;
+}
+
+.winner {
+    opacity: 1;
+    transform: scale(1.5);
+}
+
+.loser {
+ opacity: .5;
+ transform: scale(.5);
 }
 
 #clear-selections-btn {

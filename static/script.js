@@ -67,30 +67,34 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   boxes.forEach((elem) => {
-    elem.addEventListener('click', (e) => {
-      let newDataObj = getDataObject(
-        e.target.getAttribute('data-shade'),
-        selectionDataArr
-      );
-
-      adjustTallyData(newDataObj);
-      debouncePaint(elem, newDataObj);
-
-      if (clearSelectionsBtn.disabled === true) {
-        clearSelectionsBtn.disabled = false;
-      }
-    });
+    elem.addEventListener('click', handleClickAndTallyOfAllKeys);
   });
+
+  function handleClickAndTallyOfAllKeys(evt) {
+    let newDataObj = getDataObject(
+      evt.target.getAttribute('data-shade'),
+      selectionDataArr
+    );
+
+    adjustTallyData(newDataObj);
+    debouncePaint(this, newDataObj);
+
+    if (clearSelectionsBtn.disabled === true) {
+      clearSelectionsBtn.disabled = false;
+    }
+  }
 
   candidateInputsCollection.forEach((elem) => {
-    elem.addEventListener('keyup', (e) => {
-      if (e.target.value === '') {
-        document.querySelector('.outcome').innerText = e.target.id + ' Wins';
-      } else {
-        document.querySelector('.outcome').innerText = e.target.value + ' Wins';
-      }
-    });
+    elem.addEventListener('keyup', handleKeyUpForCandidateInputs);
   });
+
+  function handleKeyUpForCandidateInputs(evt) {
+    if (evt.target.value === '') {
+      document.querySelector('.outcome').innerText = evt.target.id + ' Wins';
+    } else {
+      document.querySelector('.outcome').innerText = evt.target.value + ' Wins';
+    }
+  }
 
   function adjustTallyData(newDataObj) {
     switch (newDataObj.for) {
@@ -119,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       isPainting = true;
       let timeoutID = setTimeout(() => {
-        paintTally(elem, newDataObj);
+        paintAndTallyTotals(elem, newDataObj);
         isPainting = false;
         clearTimeout(timeoutID);
       }, debounceTime);
@@ -139,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function paintTally(elem, newDataObj) {
+  function paintAndTallyTotals(elem, newDataObj) {
     elem.setAttribute('data-shade', newDataObj.idx);
     elem.style.backgroundColor = newDataObj.color;
     elem.style.color = newDataObj.textColor;
@@ -152,17 +156,13 @@ document.addEventListener('DOMContentLoaded', () => {
         undecidedElem.innerText = tallyData[i];
       }
     }
+
     if (tallyData[2] < 8) {
-      const trueCandidate = selectionDataArr[1];
       declareWinner();
-    }
-    if (tallyData[0] >= 8 && tallyData[1] < 6) {
-      const trueCandidate = selectionDataArr[1];
-      declareWinner(trueCandidate, getCandidate(true));
-    }
-    if (tallyData[1] >= 6 && tallyData[0] < 8) {
-      const falseCandidate = selectionDataArr[4];
-      declareWinner(falseCandidate, getCandidate(false));
+    } else if (tallyData[0] >= 8 && tallyData[1] < 6) {
+      declareWinner(true);
+    } else if (tallyData[1] >= 6 && tallyData[0] < 8) {
+      declareWinner(false);
     }
   }
 
@@ -178,25 +178,52 @@ document.addEventListener('DOMContentLoaded', () => {
     boxes.forEach((elem) => {
       tallyData = [0, 0, 13];
       let resetDataObj = selectionDataArr[0];
-      paintTally(elem, resetDataObj);
+      paintAndTallyTotals(elem, resetDataObj);
     });
 
     declareWinner();
   });
 
-  function declareWinner(winnerElectionObj = false, candidateName) {
-    const outcomeElem = document.querySelector('.outcome');
-    if (winnerElectionObj === false) {
-      outcomeElem.style.opacity = 0;
-      outcomeElem.innerText = '';
-      outcomeElem.style.color = '#ffffff';
-      outcomeElem.style.backgroundColor = '#ffffff';
-      return;
+  function getCurrWinnerDataObj(currTallyDataArr) {
+    for (let i = 0; i < currTallyDataArr.length; i++) {
+      if (i === 0 && currTallyDataArr[i] >= 8) {
+        return selectionDataArr[1];
+      } else if (i === 1 && currTallyDataArr[i] >= 4) {
+        return selectionDataArr[4];
+      } else {
+        return selectionDataArr[0];
+      }
     }
-    outcomeElem.style.opacity = 1;
-    outcomeElem.innerText = candidateName + ' Wins';
-    outcomeElem.style.color = winnerElectionObj.textColor;
-    outcomeElem.style.backgroundColor = winnerElectionObj.color;
+  }
+
+  function declareWinner(candidateTrue = undefined) {
+    let trueCandidateElem = document.getElementById('trueCandidate');
+    let falseCandidateElem = document.getElementById('falseCandidate');
+
+    if (candidateTrue === undefined) {
+      trueCandidateElem.classList.remove('.loser');
+      trueCandidateElem.classList.remove('.winner');
+
+      falseCandidateElem.classList.remove('winner', 'loser');
+    }
+
+    if (candidateTrue) {
+      trueCandidateElem.classList.remove('loser');
+      trueCandidateElem.classList.add('winner');
+      trueCandidateElem.value = getCandidate(true);
+
+      falseCandidateElem.classList.remove('winner');
+      falseCandidateElem.classList.add('loser');
+      falseCandidateElem.value = getCandidate(false);
+    } else {
+      trueCandidateElem.classList.remove('loser');
+      trueCandidateElem.classList.add('winner');
+      trueCandidateElem.value = getCandidate(true);
+
+      falseCandidateElem.classList.remove('winner');
+      falseCandidateElem.classList.add('loser');
+      falseCandidateElem.value = getCandidate(false);
+    }
   }
 
   function getCandidate(candidate) {
