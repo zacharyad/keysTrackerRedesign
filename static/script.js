@@ -71,14 +71,17 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function handleClickAndTallyOfAllKeys(evt) {
-    let newDataObj = getDataObject(
+    let newDataObj = getAndAdvDataObjectShadeVal(
       evt.target.getAttribute('data-shade'),
       selectionDataArr
     );
 
+    console.log('adjustingTallyData now');
     adjustTallyData(newDataObj);
+    console.log('debouncePaint now');
     debouncePaint(this, newDataObj);
 
+    // selections starting again, allow the board to be cleared again
     if (clearSelectionsBtn.disabled === true) {
       clearSelectionsBtn.disabled = false;
     }
@@ -114,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
         break;
     }
 
-    return tallyData;
+    return undefined;
   }
 
   function debouncePaint(elem, newDataObj) {
@@ -157,16 +160,19 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    if (tallyData[2] < 8) {
-      declareWinner();
-    } else if (tallyData[0] >= 8 && tallyData[1] < 6) {
+    if (tallyData[0] >= 8 && tallyData[1] < 6) {
+      console.log('1');
       declareWinner(true);
     } else if (tallyData[1] >= 6 && tallyData[0] < 8) {
+      console.log('2');
       declareWinner(false);
+    } else {
+      console.log('3');
+      declareWinner();
     }
   }
 
-  function getDataObject(currentValue, selectionDataArr) {
+  function getAndAdvDataObjectShadeVal(currentValue, selectionDataArr) {
     let newShadeVal = Number(currentValue) + 1;
     if (newShadeVal >= selectionDataArr.length) newShadeVal = 0;
     return selectionDataArr[newShadeVal];
@@ -188,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
     for (let i = 0; i < currTallyDataArr.length; i++) {
       if (i === 0 && currTallyDataArr[i] >= 8) {
         return selectionDataArr[1];
-      } else if (i === 1 && currTallyDataArr[i] >= 4) {
+      } else if (i === 1 && currTallyDataArr[i] >= 6) {
         return selectionDataArr[4];
       } else {
         return selectionDataArr[0];
@@ -200,14 +206,18 @@ document.addEventListener('DOMContentLoaded', () => {
     let trueCandidateElem = document.getElementById('trueCandidate');
     let falseCandidateElem = document.getElementById('falseCandidate');
 
-    if (candidateTrue === undefined) {
-      trueCandidateElem.classList.remove('.loser');
-      trueCandidateElem.classList.remove('.winner');
+    console.log('A');
 
+    if (candidateTrue === undefined) {
+      console.log('B');
+      trueCandidateElem.classList.remove('loser');
+      trueCandidateElem.classList.remove('winner');
       falseCandidateElem.classList.remove('winner', 'loser');
+      return;
     }
 
     if (candidateTrue) {
+      console.log('C');
       trueCandidateElem.classList.remove('loser');
       trueCandidateElem.classList.add('winner');
       trueCandidateElem.value = getCandidate(true);
@@ -216,12 +226,13 @@ document.addEventListener('DOMContentLoaded', () => {
       falseCandidateElem.classList.add('loser');
       falseCandidateElem.value = getCandidate(false);
     } else {
-      trueCandidateElem.classList.remove('loser');
-      trueCandidateElem.classList.add('winner');
+      console.log('D');
+      trueCandidateElem.classList.add('loser');
+      trueCandidateElem.classList.remove('winner');
       trueCandidateElem.value = getCandidate(true);
 
-      falseCandidateElem.classList.remove('winner');
-      falseCandidateElem.classList.add('loser');
+      falseCandidateElem.classList.add('winner');
+      falseCandidateElem.classList.remove('loser');
       falseCandidateElem.value = getCandidate(false);
     }
   }

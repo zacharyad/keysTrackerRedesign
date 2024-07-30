@@ -63,6 +63,11 @@ html {
     gap: 25px;
 }
 
+label {
+    padding: 15px;
+}
+
+
 .container:first-child > div {
     display: flex;
     justify-content: end;
@@ -70,12 +75,12 @@ html {
 
 .winner {
     opacity: 1;
-    transform: scale(1.5);
+    transform: scale(1.2);
 }
 
 .loser {
  opacity: .5;
- transform: scale(.5);
+ transform: scale(.75);
 }
 
 #clear-selections-btn {
