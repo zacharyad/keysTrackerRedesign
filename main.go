@@ -52,7 +52,9 @@ func main() {
 	// 	log.Fatal("Failed to seed database:", err)
 	// }
 
-	tempVars := os.Getenv("PORT")
+	tempVars := "3000"
+
+	fmt.Println("check this: ", tempVars)
 
 	engine := html.NewFileSystem(http.Dir("./views"), ".html")
 
@@ -68,7 +70,7 @@ func main() {
 }
 
 func HandleRenderLandingPage(c *fiber.Ctx) error {
-	return c.Render("index", fiber.Map{})
+	return c.Render("./views/index.html", fiber.Map{})
 }
 
 func HandleRenderHistoricalPage(c *fiber.Ctx) error {
