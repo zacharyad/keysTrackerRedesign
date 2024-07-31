@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BoilerPlate HTML</title>
+    <title>13 Historical Keys: {{ .KeysData.Year}}</title>
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
     <link rel="stylesheet" href="/static/style.css">
     
@@ -119,14 +119,12 @@
                 <p><em>click boxes to cycle through selections</em></p>
                 {{ range .KeysData.Keys }}
                   <div class="row">
-                    <div class="row-title">{{ .Title }}</div>
+                    <div class="row-title"><a target="_blank" href="{{ .Data.Wikihref }}">{{ .Data.Title }}</a></div>
                     <p class="toselection">=</p>
-                    
+                    <p class="hoverHistDesc">{{ .HistoricalDesc }} <a href="{{ .Data.Wikihref }}">Key Metrics Wiki</a></p>
                     <button class="marker-box" data-shade="{{ .Shade }}"></button>
                   </div>
               {{ end }}
-
-
             </div>
         </section>
     </main>

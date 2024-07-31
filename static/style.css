@@ -6,6 +6,7 @@
     --secondary-color: #5AC8FA;
     --text-color: #0E53A2;
     --background-color: #FFFFFF;
+    --html-background-color: #f3f3f3;
     --card-background: #F2F2F7;
 
     --true-certainly-text-color: #ffffff;
@@ -41,11 +42,15 @@
     color: var(--primary-color);
 }
 
+.hoverHistDesc {
+    display: none;
+}
+
 html {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
     line-height: 1.6;
     color: var(--text-color);
-    background-color: var(--background-color);
+    background-color: var(--html-background-color);
     display: flex;
     flex-direction: column;
     align-content: center;

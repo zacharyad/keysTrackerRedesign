@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const candidateInputsCollection =
     document.querySelectorAll('.candidateInput');
   const boxes = document.querySelectorAll('.marker-box');
+  const keysLearnMoreBtns = document.querySelectorAll('.key-learn-more-btn');
   const trueElem = document.getElementById('true');
   const falseElem = document.getElementById('false');
   const undecidedElem = document.getElementById('undecided');
