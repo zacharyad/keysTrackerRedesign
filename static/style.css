@@ -119,7 +119,7 @@ main {
 
 .year-link-container a:hover {
     border: 2px #000000 solid;
-    background-color: #00000010;
+    background-color: var(--true-leans-bg-color);
     transform: scale(1.1);
     text-wrap: wrap;
     transition: cubic-bezier(0.075, 0.82, 0.165, 1) 1s;

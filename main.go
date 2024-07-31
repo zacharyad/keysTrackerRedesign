@@ -80,7 +80,7 @@ func HandleRenderHistoricalPage(c *fiber.Ctx) error {
 
 	if year < 1860 || year > 2024 {
 		fmt.Println("issue with the year.", year)
-		return c.Render("historicalError", fiber.Map{})
+		return c.Render("historicalError", fiber.Map{"Error": "Seems your year may be a bit off..... try a year between 1860 and our current election."})
 	}
 
 	if len(electionData["1860"].Year) == 0 {
@@ -90,7 +90,8 @@ func HandleRenderHistoricalPage(c *fiber.Ctx) error {
 	foundElec := electionData[strYear]
 
 	if foundElec.Year != strYear {
-		return nil
+		return c.Render("historicalError", fiber.Map{"Error": "We EITHER messed up getting this election data OR your year may be a bit off... Make sure your election year is correct while we work on fixing this."})
+
 	}
 
 	return c.Render("historical", fiber.Map{"KeysData": foundElec})

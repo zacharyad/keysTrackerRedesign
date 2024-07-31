@@ -1,0 +1,205 @@
+{{ define "Dialog" }}
+<dialog>
+  <h4>Welcome to 13 Keys Tracker!</h4>
+  <p><em>This is a free interactive tool for predicting the winner of the 2024 U.S. presidential election, based on Professor Allan Lichtman's famous 13 Keys to the White House.</em></p>
+  <ul>
+      <li>Using his key system, he correctly predicted the outcome of every presidential election since 1860! </li>
+      <li>The keys are a checklist of True/False statements that pertain to the circumstances surrounding a presidential election.</li>
+      <li><a href="">You can see where the keys currently stand based on Lichtman's most recent public comments in the key descriptions.</a> </li>
+      <li>Political colors are not assigned, but red and blue are being used regardless. Any historical races may not correlate to party leanings based on color.</li>  
+      <li>You can also make your own prediction by clicking the boxes to cycle through assignments of True/False labels to the keys.</li>    
+      <li>Modify the end of the URL with a /year to get historical keys (e.g. "www.13KeysInteractive.com/1988") to get historical keys to those races.</li>   
+  </ul>
+  <label for="pastelections">
+    <strong>Past Elections:</strong>
+    <div id="pastelections" class="year-link-container">
+        <a href="/">Try it out yourself!</a>
+        <a href="/1860">Davis v. Lincoln/1860</a>
+        <a href="/1864">Lincoln v. McCellan /1864</a>
+        <a href="/1868">Person v. Person /xxxx</a>
+        <a href="/1872">Person v. Person /xxxx</a>
+        <a href="/1876">Person v. Person /xxxx</a>
+        <a href="/1880">Person v. Person /xxxx</a>
+        <a href="/1884">Person v. Person /xxxx</a>
+        <a href="/1888">Person v. Person /xxxx</a>
+        <a href="/1892">Person v. Person /xxxx</a>
+        <a href="/1896">Person v. Person /xxxx</a>
+        <a href="/1900">Person v. Person /xxxx</a>
+        <a href="/1904">Person v. Person /xxxx</a>
+        <a href="/1908">Person v. Person /xxxx</a>
+        <a href="/1912">Person v. Person /xxxx</a>
+        <a href="/1916">Person v. Person /xxxx</a>
+        <a href="/1920">Person v. Person /xxxx</a>
+        <a href="/1924">Person v. Person /xxxx</a>
+        <a href="/1928">Person v. Person /xxxx</a>
+        <a href="/1932">Person v. Person /xxxx</a>
+        <a href="/1936">Person v. Person /xxxx</a>
+        <a href="/1940">Person v. Person /xxxx</a>
+        <a href="/1944">Person v. Person /xxxx</a>
+        <a href="/1948">Person v. Person /xxxx</a>
+        <a href="/1952">Person v. Person /xxxx</a>
+        <a href="/1956">Person v. Person /xxxx</a>
+        <a href="/1960">Person v. Person /xxxx</a>
+        <a href="/1964">Person v. Person /xxxx</a>
+        <a href="/1968">Person v. Person /xxxx</a>
+        <a href="/1972">Person v. Person /xxxx</a>
+        <a href="/1976">Person v. Person /xxxx</a>
+        <a href="/1980">Person v. Person /xxxx</a>
+        <a href="/1984">Person v. Person /xxxx</a>
+        <a href="/1988">Person v. Person /xxxx</a>
+        <a href="/1992">Person v. Person /xxxx</a>
+        <a href="/1996">Person v. Person /xxxx</a>
+        <a href="/2000">Person v. Person /xxxx</a>
+        <a href="/2004">Person v. Person /xxxx</a>
+        <a href="/2008">Person v. Person /xxxx</a>
+        <a href="/2012">Person v. Person /xxxx</a>
+        <a href="/2016">Person v. Person /xxxx</a>
+        <a href="/2020">Person v. Person /xxxx</a>
+        <a href="/current">Harris v. Trump /current</a>
+    </div>
+</label>
+</dialog>
+  
+{{ end }}
+
+{{ define "Info"}}
+<section id="info">
+  <p><strong>Key's Options:</strong></p>
+  <div class="container">
+      <div class="true-option-row">
+          <div class="true certainly">Certainly True</div>
+          <div class="true likely">Likely True</div>
+          <div class="true leans">Leans True</div>
+      </div>
+
+      <div class="false-option-row">
+          <div class="false certainly">Certainly False</div>
+          <div class="false likely">Likely False</div>
+          <div class="false leans">Leans False</div>
+      </div> 
+     
+  </div>
+<hr>
+</section>
+{{ end }}
+
+{{ define "Tally"}}
+<p id="declared-winner"></p>
+        <div class="row tally"> 
+            <label for="true">
+                True
+                <div id="true" class="oppenc">0</div>
+            </label>
+
+            <label for="false">
+                Undecided
+                <div id="undecided" class="oppenc">13</div>
+            </label>
+
+            <label for="false">
+                False
+                <div id="false" class="oppenc">0</div>
+            </label>
+        </div>
+
+{{ end }}
+
+{{ define "IndexSelections"}}
+<section>
+  <div class="container">
+      <p><em>click boxes to cycle through selections</em></p>
+      
+        <div class="row">
+          <div class="row-title"><a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Key_1:_Party_mandate">Key 1: Midterm Gains</a></div>
+          <p class="toselection">=</p>
+          <p class="hoverHistDesc">description of the race <a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Key_1:_Party_mandate">Key Metrics Wiki</a></p>
+          <button class="marker-box" data-shade="0" style="background-color: rgb(255, 255, 255); color: rgb(0, 122, 255);">Undecided</button>
+        </div>
+    
+        <div class="row">
+          <div class="row-title"><a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Key_2:_No_primary_contest">Key 2: No Primary Contest</a></div>
+          <p class="toselection">=</p>
+          <p class="hoverHistDesc">description of the race <a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Key_2:_No_primary_contest">Key Metrics Wiki</a></p>
+          <button class="marker-box" data-shade="0" style="background-color: rgb(255, 255, 255); color: rgb(0, 122, 255);">Undecided</button>
+        </div>
+    
+        <div class="row">
+          <div class="row-title"><a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Key_3:_Incumbent_seeking_re-election">Key 3: Incumbent Seeking Re-election</a></div>
+          <p class="toselection">=</p>
+          <p class="hoverHistDesc">description of the race <a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Key_3:_Incumbent_seeking_re-election">Key Metrics Wiki</a></p>
+          <button class="marker-box" data-shade="0" style="background-color: rgb(255, 255, 255); color: rgb(0, 122, 255);">Undecided</button>
+        </div>
+    
+        <div class="row">
+          <div class="row-title"><a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Key_4:_No_third_party">Key 4: No Third Party</a></div>
+          <p class="toselection">=</p>
+          <p class="hoverHistDesc">description of the race <a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Key_4:_No_third_party">Key Metrics Wiki</a></p>
+          <button class="marker-box" data-shade="0" style="background-color: rgb(255, 255, 255); color: rgb(0, 122, 255);">Undecided</button>
+        </div>
+    
+        <div class="row">
+          <div class="row-title"><a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Keys_5_and_6:_Strong_long-term_and_short-term_economy">Key 5: Strong Short-Term Economy</a></div>
+          <p class="toselection">=</p>
+          <p class="hoverHistDesc">description of the race <a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Keys_5_and_6:_Strong_long-term_and_short-term_economy">Key Metrics Wiki</a></p>
+          <button class="marker-box" data-shade="0" style="background-color: rgb(255, 255, 255); color: rgb(0, 122, 255);">Undecided</button>
+        </div>
+    
+        <div class="row">
+          <div class="row-title"><a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Keys_5_and_6:_Strong_long-term_and_short-term_economy">Key 6: Strong Long-Term Economy</a></div>
+          <p class="toselection">=</p>
+          <p class="hoverHistDesc">description of the race <a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Keys_5_and_6:_Strong_long-term_and_short-term_economy">Key Metrics Wiki</a></p>
+          <button class="marker-box" data-shade="0" style="background-color: rgb(255, 255, 255); color: rgb(0, 122, 255);">Undecided</button>
+        </div>
+    
+        <div class="row">
+          <div class="row-title"><a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Key_7:_Major_policy_change">Key 7: Major Policy Change</a></div>
+          <p class="toselection">=</p>
+          <p class="hoverHistDesc">description of the race <a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Key_7:_Major_policy_change">Key Metrics Wiki</a></p>
+          <button class="marker-box" data-shade="0" style="background-color: rgb(255, 255, 255); color: rgb(0, 122, 255);">Undecided</button>
+        </div>
+    
+        <div class="row">
+          <div class="row-title"><a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Key_8:_No_social_unrest">Key 8: No Social Unrest</a></div>
+          <p class="toselection">=</p>
+          <p class="hoverHistDesc">description of the race <a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Key_8:_No_social_unrest">Key Metrics Wiki</a></p>
+          <button class="marker-box" data-shade="0" style="background-color: rgb(255, 255, 255); color: rgb(0, 122, 255);">Undecided</button>
+        </div>
+    
+        <div class="row">
+          <div class="row-title"><a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Key_9:_No_scandal">Key 9: No Scandal</a></div>
+          <p class="toselection">=</p>
+          <p class="hoverHistDesc">description of the race <a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Key_9:_No_scandal">Key Metrics Wiki</a></p>
+          <button class="marker-box" data-shade="0" style="background-color: rgb(255, 255, 255); color: rgb(0, 122, 255);">Undecided</button>
+        </div>
+    
+        <div class="row">
+          <div class="row-title"><a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Keys_10_and_11:_Foreign_or_military_failure_and_success">Key 10: No Foreign/Military Failure</a></div>
+          <p class="toselection">=</p>
+          <p class="hoverHistDesc">description of the race <a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Keys_10_and_11:_Foreign_or_military_failure_and_success">Key Metrics Wiki</a></p>
+          <button class="marker-box" data-shade="0" style="background-color: rgb(255, 255, 255); color: rgb(0, 122, 255);">Undecided</button>
+        </div>
+    
+        <div class="row">
+          <div class="row-title"><a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Keys_10_and_11:_Foreign_or_military_failure_and_success">Key 11: Major Foreign/Military Success</a></div>
+          <p class="toselection">=</p>
+          <p class="hoverHistDesc">description of the race <a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Keys_10_and_11:_Foreign_or_military_failure_and_success">Key Metrics Wiki</a></p>
+          <button class="marker-box" data-shade="0" style="background-color: rgb(255, 255, 255); color: rgb(0, 122, 255);">Undecided</button>
+        </div>
+    
+        <div class="row">
+          <div class="row-title"><a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Keys_12_and_13:_Candidate_charisma">Key 12: Charismatic Incumbent</a></div>
+          <p class="toselection">=</p>
+          <p class="hoverHistDesc">description of the race <a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Keys_12_and_13:_Candidate_charisma">Key Metrics Wiki</a></p>
+          <button class="marker-box" data-shade="0" style="background-color: rgb(255, 255, 255); color: rgb(0, 122, 255);">Undecided</button>
+        </div>
+    
+        <div class="row">
+          <div class="row-title"><a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Keys_12_and_13:_Candidate_charisma">Key 13: Uncharismatic Challenger</a></div>
+          <p class="toselection">=</p>
+          <p class="hoverHistDesc">description of the race <a href="https://en.wikipedia.org/wiki/The_Keys_to_the_White_House#Keys_12_and_13:_Candidate_charisma">Key Metrics Wiki</a></p>
+          <button class="marker-box" data-shade="0" style="background-color: rgb(255, 255, 255); color: rgb(0, 122, 255);">Undecided</button>
+        </div>
+    
+  </div>
+</section>
+{{ end }}
