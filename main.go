@@ -68,7 +68,7 @@ func main() {
 }
 
 func HandleRenderLandingPage(c *fiber.Ctx) error {
-	return c.Render("./views/index.html", fiber.Map{})
+	return c.Render("index", fiber.Map{})
 }
 
 func HandleRenderHistoricalPage(c *fiber.Ctx) error {
