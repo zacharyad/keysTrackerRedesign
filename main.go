@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
@@ -51,7 +52,8 @@ func main() {
 	// 	log.Fatal("Failed to seed database:", err)
 	// }
 
-	tempVars := "8080"
+	tempVars := os.Getenv("PORT")
+
 	engine := html.NewFileSystem(http.Dir("./views"), ".html")
 
 	app := fiber.New(fiber.Config{
