@@ -7,8 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const trueElem = document.getElementById('true');
   const falseElem = document.getElementById('false');
   const undecidedElem = document.getElementById('undecided');
+  const declaredWinner = document.getElementById('declared-winner');
   const clearSelectionsBtn = document.getElementById('clear-selections-btn');
-  let tallyData = [0, 0, 13];
+  const repairSelectionsBtn = document.getElementById('repair-selections-btn');
+
+  let tallyData = [0, 0, 0]; // [true, false, undecided]
   const debounceTime = 25;
   let isPainting = false;
 
@@ -66,7 +69,34 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   ];
 
+  //
+
+  const dialog = document.querySelector('dialog');
+  const showButton = document.querySelector('.dialogBtn');
+
+  // "Show the dialog" button opens the dialog modally
+  showButton.addEventListener('click', () => {
+    dialog.showModal();
+  });
+
+  dialog.addEventListener('click', () => {
+    dialog.close();
+  });
+
   boxes.forEach((elem) => {
+    let shadeData = Number(elem.getAttribute('data-shade'));
+
+    if (shadeData === 0) {
+      tallyData[2]++;
+    } else if (shadeData >= 1 && shadeData <= 3) {
+      tallyData[0]++;
+    } else if (shadeData > 3) {
+      tallyData[1]++;
+    } else {
+      console.log('somthing is wrong');
+    }
+
+    paintAndTallyTotals(elem, selectionDataArr[shadeData]);
     elem.addEventListener('click', handleClickAndTallyOfAllKeys);
   });
 
@@ -76,14 +106,18 @@ document.addEventListener('DOMContentLoaded', () => {
       selectionDataArr
     );
 
-    console.log('adjustingTallyData now');
     adjustTallyData(newDataObj);
-    console.log('debouncePaint now');
     debouncePaint(this, newDataObj);
 
     // selections starting again, allow the board to be cleared again
-    if (clearSelectionsBtn.disabled === true) {
+    if (clearSelectionsBtn && clearSelectionsBtn.disabled == true) {
+      console.log('clicked ');
       clearSelectionsBtn.disabled = false;
+    }
+
+    if (repairSelectionsBtn) {
+      console.log('clicked ');
+      repairSelectionsBtn.disabled = false;
     }
   }
 
@@ -92,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function handleKeyUpForCandidateInputs(evt) {
+    console.log(evt);
     if (evt.target.value === '') {
       document.querySelector('.outcome').innerText = evt.target.id + ' Wins';
     } else {
@@ -161,13 +196,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (tallyData[0] >= 8 && tallyData[1] < 6) {
-      console.log('1');
       declareWinner(true);
     } else if (tallyData[1] >= 6 && tallyData[0] < 8) {
-      console.log('2');
       declareWinner(false);
     } else {
-      console.log('3');
       declareWinner();
     }
   }
@@ -178,63 +210,54 @@ document.addEventListener('DOMContentLoaded', () => {
     return selectionDataArr[newShadeVal];
   }
 
-  clearSelectionsBtn.addEventListener('click', () => {
-    clearSelectionsBtn.disabled = true;
+  if (clearSelectionsBtn) {
+    clearSelectionsBtn.addEventListener('click', () => {
+      clearSelectionsBtn.disabled = true;
 
-    boxes.forEach((elem) => {
-      tallyData = [0, 0, 13];
-      let resetDataObj = selectionDataArr[0];
-      paintAndTallyTotals(elem, resetDataObj);
+      boxes.forEach((elem) => {
+        tallyData = [0, 0, 13];
+        let resetDataObj = selectionDataArr[0];
+        paintAndTallyTotals(elem, resetDataObj);
+      });
+
+      declareWinner();
     });
+  }
 
-    declareWinner();
-  });
-
-  function getCurrWinnerDataObj(currTallyDataArr) {
-    for (let i = 0; i < currTallyDataArr.length; i++) {
-      if (i === 0 && currTallyDataArr[i] >= 8) {
-        return selectionDataArr[1];
-      } else if (i === 1 && currTallyDataArr[i] >= 6) {
-        return selectionDataArr[4];
-      } else {
-        return selectionDataArr[0];
-      }
-    }
+  if (repairSelectionsBtn) {
+    repairSelectionsBtn.addEventListener('click', () => {
+      document.location.reload();
+    });
   }
 
   function declareWinner(candidateTrue = undefined) {
     let trueCandidateElem = document.getElementById('trueCandidate');
     let falseCandidateElem = document.getElementById('falseCandidate');
 
-    console.log('A');
-
     if (candidateTrue === undefined) {
-      console.log('B');
-      trueCandidateElem.classList.remove('loser');
-      trueCandidateElem.classList.remove('winner');
-      falseCandidateElem.classList.remove('winner', 'loser');
+      resetWinnerLoserElems(trueCandidateElem, falseCandidateElem);
       return;
-    }
-
-    if (candidateTrue) {
-      console.log('C');
-      trueCandidateElem.classList.remove('loser');
-      trueCandidateElem.classList.add('winner');
-      trueCandidateElem.value = getCandidate(true);
-
-      falseCandidateElem.classList.remove('winner');
-      falseCandidateElem.classList.add('loser');
-      falseCandidateElem.value = getCandidate(false);
+    } else if (candidateTrue) {
+      winnerLoserToggleElemStyles(trueCandidateElem, falseCandidateElem);
     } else {
-      console.log('D');
-      trueCandidateElem.classList.add('loser');
-      trueCandidateElem.classList.remove('winner');
-      trueCandidateElem.value = getCandidate(true);
-
-      falseCandidateElem.classList.add('winner');
-      falseCandidateElem.classList.remove('loser');
-      falseCandidateElem.value = getCandidate(false);
+      winnerLoserToggleElemStyles(falseCandidateElem, trueCandidateElem);
     }
+  }
+
+  function resetWinnerLoserElems(trueCandidateElem, falseCandidateElem) {
+    trueCandidateElem.classList.remove('loser', 'winner');
+    falseCandidateElem.classList.remove('loser', 'winner');
+    declaredWinner.innerText = '';
+  }
+
+  function winnerLoserToggleElemStyles(wElem, lElem) {
+    wElem.classList.add('winner');
+    wElem.classList.remove('loser');
+    declaredWinner.innerText =
+      getCandidate(wElem.id === 'trueCandidate') + ' Wins!';
+
+    lElem.classList.add('loser');
+    lElem.classList.remove('winner');
   }
 
   function getCandidate(candidate) {

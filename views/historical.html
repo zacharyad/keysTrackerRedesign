@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoilerPlate HTML</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <link rel="stylesheet" href="/static/style.css">
+    
+  </head>
+<body>
+    <header>
+        <nav>
+            <div><button class="dialogBtn">i</button></div>
+        </nav>
+    </header>
+
+    <dialog>
+            <h4>Welcome to 13 Keys Tracker!</h4>
+            <p><em>This is a free interactive tool for predicting the winner of the 2024 U.S. presidential election, based on Professor Allan Lichtman's famous 13 Keys to the White House.</em></p>
+            <ul>
+                <li>Using his key system, he correctly predicted the outcome of every presidential election since 1860! </li>
+                <li>The keys are a checklist of True/False statements that pertain to the circumstances surrounding a presidential election.</li>
+                <li><a href="">You can see where the keys currently stand based on Lichtman's most recent public comments in the key descriptions.</a> </li>
+                <li>Political colors are not assigned, but red and blue are being used regardless. Any historical races may not correlate to party leanings based on color.</li>  
+                <li>You can also make your own prediction by clicking the boxes to cycle through assignments of True/False labels to the keys.</li>    
+                <li>Modify the end of the URL with a /year to get historical keys (e.g. "www.13KeysInteractive.com/1988") to get historical keys to those races.</li>   
+            </ul>
+            <label for="pastelections">
+              <strong>Past Elections:</strong>
+              <div id="pastelections" class="year-link-container">
+                  <a href="/">Try it out yourself!</a>
+                  <a href="/1860">Davis v. Lincoln/1860</a>
+                  <a href="/1864">Lincoln v. McCellan /1864</a>
+                  <a href="/1868">Person v. Person /xxxx</a>
+                  <a href="/1872">Person v. Person /xxxx</a>
+                  <a href="/1876">Person v. Person /xxxx</a>
+                  <a href="/1880">Person v. Person /xxxx</a>
+                  <a href="/1884">Person v. Person /xxxx</a>
+                  <a href="/1888">Person v. Person /xxxx</a>
+                  <a href="/1892">Person v. Person /xxxx</a>
+                  <a href="/1896">Person v. Person /xxxx</a>
+                  <a href="/1900">Person v. Person /xxxx</a>
+                  <a href="/1904">Person v. Person /xxxx</a>
+                  <a href="/1908">Person v. Person /xxxx</a>
+                  <a href="/1912">Person v. Person /xxxx</a>
+                  <a href="/1916">Person v. Person /xxxx</a>
+                  <a href="/1920">Person v. Person /xxxx</a>
+                  <a href="/1924">Person v. Person /xxxx</a>
+                  <a href="/1928">Person v. Person /xxxx</a>
+                  <a href="/1932">Person v. Person /xxxx</a>
+                  <a href="/1936">Person v. Person /xxxx</a>
+                  <a href="/1940">Person v. Person /xxxx</a>
+                  <a href="/1944">Person v. Person /xxxx</a>
+                  <a href="/1948">Person v. Person /xxxx</a>
+                  <a href="/1952">Person v. Person /xxxx</a>
+                  <a href="/1956">Person v. Person /xxxx</a>
+                  <a href="/1960">Person v. Person /xxxx</a>
+                  <a href="/1964">Person v. Person /xxxx</a>
+                  <a href="/1968">Person v. Person /xxxx</a>
+                  <a href="/1972">Person v. Person /xxxx</a>
+                  <a href="/1976">Person v. Person /xxxx</a>
+                  <a href="/1980">Person v. Person /xxxx</a>
+                  <a href="/1984">Person v. Person /xxxx</a>
+                  <a href="/1988">Person v. Person /xxxx</a>
+                  <a href="/1992">Person v. Person /xxxx</a>
+                  <a href="/1996">Person v. Person /xxxx</a>
+                  <a href="/2000">Person v. Person /xxxx</a>
+                  <a href="/2004">Person v. Person /xxxx</a>
+                  <a href="/2008">Person v. Person /xxxx</a>
+                  <a href="/2012">Person v. Person /xxxx</a>
+                  <a href="/2016">Person v. Person /xxxx</a>
+                  <a href="/2020">Person v. Person /xxxx</a>
+                  <a href="/current">Harris v. Trump /current</a>
+              </div>
+          </label>
+        </dialog>
+            
+    <main>
+        <section id="home" class="hero">
+            <h1>Tracking the 13 <u>Historical</u> keys leading to the <u>{{ .KeysData.Year}}</u> Presidency</h1>
+        </section>
+
+        <section id="info">
+            <p><strong>Key's Options:</strong></p>
+            <div class="container">
+                <div class="true-option-row">
+                    <div class="true certainly">Certainly True</div>
+                    <div class="true likely">Likely True</div>
+                    <div class="true leans">Leans True</div>
+                </div>
+          
+                <div class="false-option-row">
+                    <div class="false certainly">Certainly False</div>
+                    <div class="false likely">Likely False</div>
+                    <div class="false leans">Leans False</div>
+                </div> 
+               
+            </div>
+          <hr>
+        </section>
+       
+        <section class="candidate-inputs">
+            <label for="trueCandidate">
+                Incumbent Candidate
+                <input id="trueCandidate" class="candidateInput" type="text" value="{{ .KeysData.TrueCandidateName }}">
+
+            </label>
+            <p>VS</p>
+
+            <label for="falseCandidate">
+                Challenging Candidate
+                <input id="falseCandidate" class="candidateInput" type="text" value="{{ .KeysData.FalseCandidateName }}">
+            </label>
+        </section>
+        <hr>
+        <section>
+            <div class="container">
+                <p><em>click boxes to cycle through selections</em></p>
+                {{ range .KeysData.Keys }}
+                  <div class="row">
+                    <div class="row-title">{{ .Title }}</div>
+                    <p class="toselection">=</p>
+                    
+                    <button class="marker-box" data-shade="{{ .Shade }}"></button>
+                  </div>
+              {{ end }}
+
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p id="declared-winner"></p>
+        <div class="row tally"> 
+            <label for="true">
+                True
+                <div id="true" class="oppenc">0</div>
+            </label>
+
+            <label for="false">
+                Undecided
+                <div id="undecided" class="oppenc">13</div>
+            </label>
+
+            <label for="false">
+                False
+                <div id="false" class="oppenc">0</div>
+            </label>
+        </div>
+        <div id="test"><button id="repair-selections-btn" disabled>Undo Changes</button></div>
+
+        <p>2024 Presidential Keys Coding Project.</p>
+    </footer>
+
+    <script type="text/javascript" src="/static/script.js"></script>
+</body>
+</html>

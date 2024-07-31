@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700');
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&family=Varela+Round&display=swap');
 
 :root {
     --primary-color: #007AFF;
@@ -52,8 +53,34 @@ html {
     padding: 20px;
 }
 
-.container {
+nav {
+    display: flex;
+    justify-content: flex-end;
+    position: sticky;
+}
 
+nav button {
+    padding: 2px 5px;
+    font-size: large;
+    border-radius: 100%;
+    width: 2rem;
+    height: 2rem;
+    color: var(--primary-color);
+    border: .5px solid var(--primary-color);
+}
+
+main {
+    padding-bottom: 200px;
+}
+
+.hero {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-content: center;
+}
+
+.container {
     width: 100%;
     margin: 0 auto;
     padding: 20px;
@@ -61,16 +88,36 @@ html {
     align-content: center;
     flex-direction: column;
     gap: 25px;
+    border: .5px #00000030 solid;
+    border-radius: 10px;
 }
 
-label {
-    padding: 15px;
+.container p {
+    align-self: center;
 }
 
+.year-link-container {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
 
-.container:first-child > div {
-    display: flex;
-    justify-content: end;
+.year-link-container a {
+    border: 1px #00000050 solid;
+    border-radius: 10px;
+    text-wrap: wrap;
+    padding: 5px 3px;
+    text-align: center;
+
+}
+
+.year-link-container a:hover {
+    border: 2px #000000 solid;
+    background-color: #00000010;
+    transform: scale(1.1);
+    text-wrap: wrap;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 1s;
 }
 
 .winner {
@@ -103,7 +150,34 @@ label {
 }
 
 #clear-selections-btn:disabled {
-    opacity: .5;
+    opacity: 0;
+    width: 200px;
+    border: transparent 2px solid;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+
+#repair-selections-btn {
+    width: 200px;
+    border: #767676 2px solid;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+
+#repair-selections-btn:hover {
+   transform:translateY( -2px)
+}
+
+#repair-selections-btn:hover:disabled {
+    transform:translateY( 0px)
+ }
+
+#repair-selections-btn:active {
+    transform:translateY( 0px)
+}
+
+#repair-selections-btn:disabled {
+    opacity: 0;
     width: 200px;
     border: transparent 2px solid;
     border-radius: 10px;
@@ -120,7 +194,8 @@ label {
 .true, .false {
     border-radius: 10px;
     padding: 5px 10px;
-    border: 1px black solid;
+font-size: small;
+    text-align: center;
 }
 
 .true-option-row .certainly {
@@ -264,17 +339,39 @@ hr {
 
 .marker-box {
     background-color: rgb(255, 255, 255);
+    border: #000000 1px solid;
     width: 50%;
+    touch-action: manipulation;
+}
+
+dialog::backdrop {
+background-color: var(--background-color);
+    opacity: 0.75;
+}
+
+dialog {
+    margin: 50px 1rem;
+    padding: 3rem;
+}
+
+dialog h4{
+    text-align: center;
+}
+
+dialog p{
+    text-align: center;
+    margin-bottom: 3px;
 }
 
 
+
 .row label > div { 
-    margin-top: 20px;
+    margin-top: 10px;
     background-color: rgb(255, 255, 255);
-    width: 200px;
-    padding: 20px 40px;
+    padding: 5px 10px;
     text-align: center;
-    border-radius: 20px;
+    border-radius: 10px;
+    
 }
 
 .toselection {
@@ -287,12 +384,12 @@ hr {
     text-align: center;
 }
 
-.row-title::after:hover {
-    content: "this is new"
+.tally {
+    margin: 0 auto;
 }
 
-.tally {
-margin: 0 auto;
+#declared-winner {
+    font-size: xx-large;
 }
 
 footer {
@@ -300,12 +397,20 @@ footer {
     padding: 10px;
     display: flex;
     justify-content: center;
-    background-color: rgba(255, 255, 255, 0.435);
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    background-color: rgba(255, 255, 255, 0.8);
     bottom: 0;
     left: 0; 
     right: 0;
 }
 
+footer p {
+    font-style: italic;
+    font-size: small;
+    font-variant: swash;
+}
 
 @media screen and (max-width: 768px) {
     .candidate-inputs {
@@ -315,8 +420,7 @@ footer {
     }
     .tally {
         display: flex;
-        flex-direction: column;
-        align-items: center;
+        justify-content: center;
     }
 }
 
