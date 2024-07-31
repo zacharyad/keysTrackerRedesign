@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html/v2"
 	"log"
@@ -36,29 +35,12 @@ type ElectionData map[string]Election
 type KeyConsts []KeyConst
 
 func main() {
-	var err error
-	// Initialize the database
-	db, err = InitDB("./database.db")
-	if err != nil {
-		log.Fatal("Failed to initialize database:", err)
-	}
-	defer db.Close()
-
-	// Seed the database
-	// err = SeedData(db)
-	// if err != nil {
-	// 	log.Fatal("Failed to seed database:", err)
-	// }
-
 	tempVars := "3000"
-
-	fmt.Println("check this: ", tempVars)
-
 	engine := html.NewFileSystem(http.Dir("./views"), ".html")
-
 	app := fiber.New(fiber.Config{
 		Views: engine,
 	})
+
 	app.Static("/static", "./static")
 
 	app.Get("/", HandleRenderLandingPage)
@@ -81,7 +63,6 @@ func HandleRenderHistoricalPage(c *fiber.Ctx) error {
 	}
 
 	if year < 1860 || year > 2024 {
-		fmt.Println("issue with the year.", year)
 		return c.Render("historicalError", fiber.Map{"Error": "Seems your year may be a bit off..... try a year between 1860 and our current election."})
 	}
 
