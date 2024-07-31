@@ -1,4 +1,4 @@
-module github.com/zacharyad/timeTracker
+module github.com/zacharyad/keysTrackerRedesign
 
 go 1.22.1
 

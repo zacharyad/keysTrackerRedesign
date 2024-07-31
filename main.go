@@ -3,13 +3,11 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"log"
-	"net/http"
-	"os"
-	"strconv"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html/v2"
+	"log"
+	"net/http"
+	"strconv"
 )
 
 var db *sql.DB
