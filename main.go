@@ -44,6 +44,10 @@ func main() {
 	app.Get("/", HandleRenderLandingPage)
 	app.Get("/:year", HandleRenderHistoricalPage)
 
+	app.Get("/health", func(c *fiber.Ctx) error {
+		return c.SendStatus(fiber.StatusOK)
+	})
+
 	log.Fatal(app.Listen(":" + tempVars))
 }
 
