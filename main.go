@@ -1,7 +1,6 @@
 package main
 
 import (
-	"database/sql"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html/v2"
 	"log"
@@ -9,7 +8,6 @@ import (
 	"strconv"
 )
 
-var db *sql.DB
 var electionData ElectionData
 
 type KeyConst struct {

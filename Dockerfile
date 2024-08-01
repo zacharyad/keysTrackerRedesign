@@ -1,4 +1,4 @@
-FROM golang:alpine AS builder
+FROM golang:1.21-alpine AS builder
 RUN apk add --no-cache --update \
   git \
   ca-certificates
@@ -12,3 +12,4 @@ FROM alpine
 COPY --from=builder /main ./
 RUN chmod +x ./main
 ENTRYPOINT ["./main"]
+RUN go run .
